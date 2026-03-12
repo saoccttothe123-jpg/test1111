@@ -75,19 +75,19 @@ module.exports = {
 		 * ID của server hỗ trợ
 		 * Support server ID
 		 */
-		SupportServer: "https://discord.gg/bkBejRNcR3",
+		SupportServer: "1104153369683177492",
 
 		/**
 		 * Link mời bot
 		 * Bot's invite link
 		 */
-		InviteBot: "https://discord.com/oauth2/authorize?client_id=1005716197259612193",
+		InviteBot: "https://discord.com/oauth2/authorize?client_id=1467924929847496784",
 
 		/**
 		 * Link ảnh banner
 		 * Banner image link
 		 */
-		Banner: "https://media.discordapp.net/attachments/1064851388221358153/1209448467077005332/image.png",
+		Banner: "",
 
 		/**
 		 * Link ảnh Background - Không sử dụng discordapp cdn
