@@ -8,7 +8,7 @@ module.exports = {
 	botConfig: {
 		prefix: "z!",
 		Moptions: "--",
-		ActivityName: "Hello, i'm Ziji",
+		ActivityName: "dm quan nhe",
 		ActivityType: "Custom",
 		Status: "online",
 		ErrorLog: "1015118615177076767",
