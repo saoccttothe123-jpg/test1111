@@ -1,3 +1,4 @@
+const Search = require("../../functions/player/Search"); // Đảm bảo đường dẫn này đúng với cấu trúc thư mục của bạn
 const { useHooks } = require("zihooks");
 const { getPlayer, getManager } = require("ziplayer");
 const config = useHooks.get("config");
