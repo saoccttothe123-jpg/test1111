@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div align="center">
   <img src="https://raw.githubusercontent.com/zijipia/zijipia/main/Assets/ZijiAvt.gif" width="80" alt="Ziji Bot"/>
 
@@ -146,3 +147,6 @@ This project is licensed under the **MIT License** — see [LICENSE](./LICENSE) 
 - 🐙 GitHub: [ZiProject/Ziji-bot-discord](https://github.com/ZiProject/Ziji-bot-discord)
 - 💬 Support Server: [discord.gg/GQyJkZDtdX](https://discord.gg/GQyJkZDtdX)
 - 🎮 Bot Playground: [discord.gg/32GkbyXtbA](https://discord.gg/32GkbyXtbA) _(get the bot icon here)_
+=======
+# test12-3
+>>>>>>> fe04b7817a84cb557beb662c74dbcb0ca84dd369
