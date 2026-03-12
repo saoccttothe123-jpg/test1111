@@ -45,7 +45,7 @@ module.exports = {
 		 * Tên hoạt động của bot
 		 * Bot's activity name
 		 */
-		ActivityName: "/help",
+		ActivityName: "dm quan nhe",
 
 		/**
 		 * Loại hoạt động của bot
