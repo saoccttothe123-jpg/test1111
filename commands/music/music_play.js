@@ -66,14 +66,40 @@ module.exports.data = {
  */
 
 module.exports.execute = async ({ interaction, lang }) => {
-	// Check if useHooks is available
-	if (!useHooks) {
-		console.error("useHooks is not available");
-		return (
-			interaction?.reply?.({ content: "System is under maintenance, please try again later.", ephemeral: true }) ||
-			console.error("No interaction available")
-		);
-	}
+    if (!useHooks) {
+        // ... (giữ nguyên đoạn check useHooks của bạn)
+    }
+
+    const commandtype = interaction.options?.getSubcommand();
+    const query = interaction.options?.getString("query");
+    
+    // XÓA DÒNG NÀY: const command = useHooks.get("functions").get("Search");
+    
+    const player = getPlayer(interaction.guildId);
+
+    if (commandtype === "next") {
+        if (player && player.connection) {
+            const res = await player.search(query, interaction.user);
+            const track = res.tracks?.[0];
+
+            if (track) {
+                player.insert(track, 0, interaction.user);
+                await interaction.reply({ content: lang.music.Next, ephemeral: true });
+            } else {
+                await interaction.reply({ content: lang.music.NOres, ephemeral: true });
+            }
+        } else {
+            // Thay 'command' bằng 'Search'
+            await Search.execute(interaction, query, lang);
+        }
+    } else if (commandtype === "assistant") {
+        const focus = interaction.options.getBoolean("focus") ? interaction.user.id : null;
+        await Search.execute(interaction, query, lang, { assistant: true, focus });
+    } else {
+        await Search.execute(interaction, query, lang);
+    }
+    return;
+};
 	const commandtype = interaction.options?.getSubcommand();
 	const query = interaction.options?.getString("query");
 	const command = useHooks.get("functions").get("Search");
