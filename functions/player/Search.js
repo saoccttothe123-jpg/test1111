@@ -161,20 +161,48 @@ async function handlePlayRequest(interaction, query, lang, options, player) {
 			...playerConfig,
 			userdata: await getQueueMetadata(player, interaction, options, lang),
 		});
+async function handlePlayRequest(interaction, query, lang, options, player) {
+    try {
+        if (!player?.userdata) {
+            tempmess = await interaction.editReply({ content: "<a:loading:1151184304676819085> Đang tải nhạc..." });
+        }
+        const playerConfig = await getPlayerConfig(options, interaction);
+        
+        const manager = getManager();
+        if (!manager) throw new Error("Music Manager chưa sẵn sàng.");
 
-		if (!Player.connection) await Player.connect(interaction?.member?.voice?.channel ?? options?.voice);
-		let reqPlayOK = false;
-		if (!!query) reqPlayOK = await Player.play(query, interaction?.user);
+        const Player = await manager.create(interaction.guild.id, {
+            ...playerConfig,
+            userdata: await getQueueMetadata(player, interaction, options, lang),
+        });
 
-		if (!reqPlayOK) throw new Error("Play request failed");
+        if (!Player.connection) {
+            await Player.connect(interaction?.member?.voice?.channel ?? options?.voice);
+        }
 
-		await cleanUpInteraction(interaction, player);
-		logger.debug("Track played successfully");
-	} catch (e) {
-		console.log(e);
-		logger.error(`Error in handlePlayRequest:  ${JSON.stringify(e)}`);
-		await handleError(interaction, lang);
-	}
+        let reqPlayOK = false;
+        if (query) {
+            // Thêm try/catch nhỏ ở đây để bắt lỗi riêng của hàm play
+            reqPlayOK = await Player.play(query, interaction?.user).catch(err => {
+                logger.error("Lỗi khi thực hiện Player.play: " + err.message);
+                return false;
+            });
+        }
+
+        if (!reqPlayOK) {
+            // Thông báo cụ thể hơn thay vì chỉ throw error chung chung
+            return await interaction.editReply({ 
+                content: "❌ Không thể phát bài hát này. Có thể do bản quyền hoặc lỗi kết nối YouTube." 
+            });
+        }
+
+        await cleanUpInteraction(interaction, player);
+    } catch (e) {
+        // SỬA TẠI ĐÂY: Log lỗi ra console dưới dạng text thay vì JSON.stringify
+        console.error("LỖI CHI TIẾT:", e); 
+        logger.error(`Error in handlePlayRequest: ${e.message}`);
+        await handleError(interaction, lang);
+    }
 }
 
 const DefaultPlayerConfig = {
